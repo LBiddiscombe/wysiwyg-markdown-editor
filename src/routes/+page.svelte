@@ -12,6 +12,6 @@
 	</div>
 </div>
 
-<div class="container mx-auto h-full max-w-4xl py-8">
+<div class="container mx-auto h-full max-w-4xl">
 	<Editor />
 </div>

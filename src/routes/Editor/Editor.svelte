@@ -25,7 +25,8 @@
 					}),
 					EditorView.theme({
 						'&': {
-							height: '100%'
+							height: '100%',
+							minHeight: '100%'
 						},
 						'&.cm-focused': {
 							outline: 'none'
@@ -48,6 +49,6 @@
 	});
 </script>
 
-<div id="editor"></div>
+<div id="editor" class="h-full"></div>
 
 <style></style>
