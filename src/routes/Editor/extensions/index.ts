@@ -8,13 +8,7 @@ import {
   EditorView,
 } from "@codemirror/view"
 import { type Extension, EditorState } from "@codemirror/state"
-import {
-  defaultHighlightStyle,
-  syntaxHighlighting,
-  indentOnInput,
-  bracketMatching,
-  foldKeymap
-} from "@codemirror/language"
+import { indentOnInput, bracketMatching, foldKeymap } from "@codemirror/language"
 import { defaultKeymap, history, historyKeymap, indentWithTab } from "@codemirror/commands"
 import { searchKeymap, highlightSelectionMatches } from "@codemirror/search"
 import { autocompletion, completionKeymap, closeBrackets, closeBracketsKeymap } from "@codemirror/autocomplete"
@@ -23,7 +17,6 @@ import { lintKeymap } from "@codemirror/lint"
 import { wysiwygMarkdown } from './wysiwygMarkdown'
 
 const editorConfig: Extension = (() => [
-  syntaxHighlighting(defaultHighlightStyle),
   highlightSpecialChars(),
   history(),
   dropCursor(),

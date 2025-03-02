@@ -23,7 +23,7 @@ export class WysiwygPlugin implements PluginValue {
 
     const decorationHidden = Decoration.mark({ class: 'sr-only' });
     const decorationBullet = Decoration.mark({ class: 'cm-bullet' });
-    const decorationMark = Decoration.mark({ class: 'bg-accent font-sans px-1 py-[2px]' });
+    const decorationMark = Decoration.mark({ class: 'bg-info font-sans px-1 py-[2px]' });
 
     const widgets: Range<Decoration>[] = [];
     const [cursor] = view.state.selection.ranges;
@@ -85,5 +85,16 @@ export const wysiwygStyle = HighlightStyle.define([
   { tag: t.monospace, class: 'font-mono text-sm' },
   { tag: t.content, class: 'font-sans' },
   { tag: t.meta, class: 'text-gray-400!' },
-  { tag: t.url, class: 'font-sans' }
+  { tag: t.url, class: 'font-sans' },
+  // code syntax
+  { tag: t.comment, color: '#8E908C' },
+  { tag: [t.labelName, t.contentSeparator], class: 'text-gray-400!' },
+  { tag: [t.variableName, t.self, t.propertyName, t.attributeName, t.regexp], color: '#C82829' },
+  { tag: [t.number, t.bool, t.null], color: '#F5871F' },
+  { tag: [t.className, t.typeName, t.definition(t.typeName)], color: '#C99E00' },
+  { tag: [t.string, t.special(t.brace)], color: '#718C00' },
+  { tag: t.operator, color: '#3E999F' },
+  { tag: [t.definition(t.propertyName), t.function(t.variableName)], color: '#4271AE' },
+  { tag: t.keyword, color: '#8959A8' },
+  { tag: t.derefOperator, color: '#4D4D4C' }
 ]);
