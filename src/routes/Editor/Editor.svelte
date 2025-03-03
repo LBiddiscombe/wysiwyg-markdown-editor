@@ -30,6 +30,9 @@
 						},
 						'&.cm-focused': {
 							outline: 'none'
+						},
+						'&.cm-focused .cm-selectionBackground, ::selection': {
+							backgroundColor: '#11CCEE !important'
 						}
 					})
 				]

@@ -1,8 +1,9 @@
-import { Decoration, EditorView, ViewPlugin, ViewUpdate, type DecorationSet, type PluginValue } from "@codemirror/view";
-import type { Range } from '@codemirror/state';
+import { Decoration, EditorView, ViewUpdate, type DecorationSet, type PluginValue } from "@codemirror/view";
+import { EditorState, type Range } from '@codemirror/state';
 import { syntaxTree } from '@codemirror/language';
 import { HighlightStyle } from '@codemirror/language';
 import { tags as t } from '@lezer/highlight';
+
 
 export class WysiwygPlugin implements PluginValue {
   decorations: DecorationSet;
@@ -82,19 +83,60 @@ export const wysiwygStyle = HighlightStyle.define([
   { tag: t.link, class: 'font-sans underline text-blue-600' },
   { tag: t.emphasis, class: 'font-sans italic' },
   { tag: t.strong, class: 'font-sans font-bold' },
-  { tag: t.monospace, class: 'font-mono text-sm' },
+  { tag: t.monospace, class: 'font-mono text-sm text-white' },
   { tag: t.content, class: 'font-sans' },
   { tag: t.meta, class: 'text-gray-400!' },
   { tag: t.url, class: 'font-sans' },
   // code syntax
-  { tag: t.comment, color: '#8E908C' },
-  { tag: [t.labelName, t.contentSeparator], class: 'text-gray-400!' },
-  { tag: [t.variableName, t.self, t.propertyName, t.attributeName, t.regexp], color: '#C82829' },
-  { tag: [t.number, t.bool, t.null], color: '#F5871F' },
-  { tag: [t.className, t.typeName, t.definition(t.typeName)], color: '#C99E00' },
-  { tag: [t.string, t.special(t.brace)], color: '#718C00' },
-  { tag: t.operator, color: '#3E999F' },
-  { tag: [t.definition(t.propertyName), t.function(t.variableName)], color: '#4271AE' },
-  { tag: t.keyword, color: '#8959A8' },
-  { tag: t.derefOperator, color: '#4D4D4C' }
+  // https://thememirror.net/cool-glow
+  {
+    tag: t.comment,
+    color: '#AEAEAE',
+  },
+  {
+    tag: [t.string, t.special(t.brace), t.regexp],
+    color: '#8DFF8E',
+  },
+  {
+    tag: [
+      t.className,
+      t.definition(t.propertyName),
+      t.function(t.variableName),
+      t.function(t.definition(t.variableName)),
+      t.definition(t.typeName),
+    ],
+    color: '#A3EBFF',
+  },
+  {
+    tag: [t.number, t.bool, t.null],
+    color: '#62E9BD',
+  },
+  {
+    tag: [t.keyword, t.operator],
+    color: '#2BF1DC',
+  },
+  {
+    tag: [t.definitionKeyword, t.modifier],
+    color: '#F8FBB1',
+  },
+  {
+    tag: [t.variableName, t.self],
+    color: '#B683CA',
+  },
+  {
+    tag: [t.angleBracket, t.tagName, t.typeName, t.propertyName],
+    color: '#60A4F1',
+  },
+  {
+    tag: t.derefOperator,
+    color: '#E0E0E0',
+  },
+  {
+    tag: t.attributeName,
+    color: '#7BACCA',
+  },
+  {
+    tag: [t.labelName, t.contentSeparator],
+    class: 'text-gray-200!',
+  }
 ]);
