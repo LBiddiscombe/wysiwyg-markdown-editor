@@ -12,6 +12,9 @@ class MermaidHelper {
       },
       deterministicIds: false,
       theme: 'neutral',
+      themeVariables: {
+        fontFamily: 'Shantell Sans Variable'
+      },
       look: 'handDrawn'
     });
   }

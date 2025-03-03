@@ -53,6 +53,7 @@
 		"@codemirror/search": "^6.5.9",
 		"@codemirror/state": "^6.5.2",
 		"@codemirror/view": "^6.36.3",
+		"@fontsource-variable/shantell-sans": "^5.2.5",
 		"@lezer/highlight": "^1.2.1",
 		"@lezer/markdown": "^1.4.1",
 		"codemirror": "^6.0.1",
