@@ -5,7 +5,7 @@ import type { EditorView } from '@codemirror/view'
 import { Decoration, ViewPlugin } from '@codemirror/view'
 
 const codeBlockDecoration = Decoration.line({ attributes: { class: 'cm-codeblock' } })
-const codeBlockOpenDecoration = Decoration.line({ attributes: { class: 'cm-codeblock-open' } })
+const codeBlockOpenDecoration = Decoration.line({ attributes: { class: 'cm-codeblock-open group' } })
 const codeBlockCloseDecoration = Decoration.line({ attributes: { class: 'cm-codeblock-close' } })
 const codeDecoration = Decoration.mark({ attributes: { class: 'cm-code' } })
 const codeOpenDecoration = Decoration.mark({ attributes: { class: 'cm-code cm-code-open' } })
