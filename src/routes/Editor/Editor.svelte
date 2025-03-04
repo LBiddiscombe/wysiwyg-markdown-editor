@@ -22,18 +22,6 @@
 					themeCompartment.of(appState.dark ? darkTheme : lightTheme),
 					EditorView.updateListener.of((update) => {
 						appState.content = update.state.doc.toString();
-					}),
-					EditorView.theme({
-						'&': {
-							height: '100%',
-							minHeight: '100%'
-						},
-						'&.cm-focused': {
-							outline: 'none'
-						},
-						'&.cm-focused .cm-selectionBackground, ::selection': {
-							backgroundColor: '#11CCEE !important'
-						}
 					})
 				]
 			})
@@ -54,4 +42,20 @@
 
 <div id="editor" class="h-full"></div>
 
-<style></style>
+<!-- Theme styles that I can't seem to do in theme.ts  -->
+<style>
+	:global(:root:has(input.theme-controller[value='dark']:checked) .cm-mermaid) {
+		filter: invert(0.78);
+	}
+
+	:global(.cm-line .cm-bullet *) {
+		display: none;
+	}
+
+	:global(.cm-line .cm-bullet::after) {
+		display: inline !important;
+		color: darkgray;
+		margin: 0 0.25rem 0 0.25rem;
+		content: '•';
+	}
+</style>

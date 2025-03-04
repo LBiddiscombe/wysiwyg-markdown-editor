@@ -10,12 +10,14 @@ import { wysiwygKeymap } from './keyMap';
 import { wysiwygCompletions } from './completions';
 import { Mark } from './lezerExtensions';
 import { code } from './codePlugin';
+import { theme } from './theme';
 
 export function wysiwygMarkdown() {
 
   return ViewPlugin.fromClass(WysiwygPlugin, {
     decorations: v => v.decorations,
     provide: () => [
+      theme,
       code(),
       syntaxHighlighting(wysiwygStyle),
       renderBlocks(),

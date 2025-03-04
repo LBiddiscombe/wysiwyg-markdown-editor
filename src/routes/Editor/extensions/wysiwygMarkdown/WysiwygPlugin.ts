@@ -85,7 +85,7 @@ export const wysiwygStyle = HighlightStyle.define([
   { tag: t.strong, class: 'font-sans font-bold' },
   { tag: t.monospace, class: 'font-mono text-sm text-white' },
   { tag: t.content, class: 'font-sans' },
-  { tag: t.meta, class: 'text-gray-400!' },
+  { tag: t.meta, class: 'text-gray-400' },
   { tag: t.url, class: 'font-sans' },
   // code syntax
   // https://thememirror.net/cool-glow
