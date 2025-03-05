@@ -71,12 +71,23 @@ These elements extend the basic syntax by adding additional features. Not all Ma
 
 ### Fenced Code Block
 
+```ts
+const state = EditorState.create({
+	doc: 'my source code',
+	extensions: [
+		coolGlow
+	]
+});
 ```
-{
-  "firstName": "John",
-  "lastName": "Smith",
-  "age": 25
-}
+
+### Fenced Code Block - mermaid
+
+```mermaid
+graph LR
+    A[Christmas] -->|Get money| B(Go shopping)
+    B --> C{Let me think}
+    C -->|One| D[Laptop]
+    C -->|Two| E[iPhone]
 ```
 
 ### Footnote
@@ -122,9 +133,3 @@ H~2~O
 
 X^2^
 
-### Fenced Code Block - mermaid
-
-```mermaid
-graph TD;
-A --> B;
-```
