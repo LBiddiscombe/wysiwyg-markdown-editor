@@ -2,9 +2,10 @@
 	import { onMount, untrack } from 'svelte';
 	import { EditorView } from '@codemirror/view';
 	import { EditorState, Compartment } from '@codemirror/state';
-
 	import { extensions } from './extensions';
 	import { appState } from '$lib/appState.svelte';
+
+	let { content } = $props();
 
 	let editor = $state<EditorView>();
 	const themeCompartment = new Compartment();
@@ -16,13 +17,13 @@
 		editor = new EditorView({
 			parent,
 			state: EditorState.create({
-				doc: appState.content,
+				doc: content,
 				extensions: [
 					...extensions,
 					themeCompartment.of(appState.dark ? darkTheme : lightTheme),
 					EditorView.updateListener.of((update) => {
 						untrack(() => {
-							appState.content = update.state.doc.toString();
+							content = update.state.doc.toString();
 						});
 					})
 				]
@@ -38,18 +39,6 @@
 			editor!.dispatch({
 				effects: themeCompartment.reconfigure(appState.dark ? darkTheme : lightTheme)
 			});
-		});
-	});
-
-	$effect(() => {
-		appState.content;
-		if (!editor) return;
-		editor.dispatch({
-			changes: {
-				from: 0,
-				to: editor.state.doc.length,
-				insert: appState.content
-			}
 		});
 	});
 </script>

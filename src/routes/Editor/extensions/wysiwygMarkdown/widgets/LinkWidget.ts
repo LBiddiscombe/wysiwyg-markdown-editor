@@ -16,6 +16,7 @@ export class LinkWidget extends WidgetType {
     let link = document.createElement('a')
     link.textContent = this.text
     link.href = this.url
+    link.target = '_blank'
     link.className = 'font-sans underline cursor-pointer text-blue-600'
     return link;
   }

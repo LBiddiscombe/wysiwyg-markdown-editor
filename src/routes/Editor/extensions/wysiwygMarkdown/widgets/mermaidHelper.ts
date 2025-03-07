@@ -1,4 +1,3 @@
-import { appState } from '$lib/appState.svelte';
 import mermaid from 'mermaid'
 
 class MermaidHelper {

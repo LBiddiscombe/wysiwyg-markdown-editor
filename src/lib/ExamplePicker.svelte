@@ -2,7 +2,12 @@
 	import basic from './examples/basic.md?raw';
 	import extended from './examples/extended.md?raw';
 	import code from './examples/code.md?raw';
-	import { appState } from '$lib/appState.svelte';
+
+	interface Props {
+		content: string;
+	}
+
+	let { content = $bindable() }: Props = $props();
 
 	const examples = [
 		{ name: 'Basic', content: basic },
@@ -10,11 +15,13 @@
 		{ name: 'Code', content: code }
 	];
 
-	$inspect(appState);
+	$effect(() => {
+		content = examples[0].content;
+	});
 </script>
 
 <div class="form-control">
-	<select class="select select-bordered select-sm" bind:value={appState.content}>
+	<select class="select select-bordered select-sm" bind:value={content}>
 		<option disabled>Choose an example</option>
 		{#each examples as example, i}
 			<option value={example.content} selected={i === 0}>{example.name}</option>
