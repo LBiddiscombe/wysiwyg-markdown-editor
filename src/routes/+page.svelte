@@ -18,8 +18,8 @@
 	</div>
 </div>
 
-<div class="container mx-auto h-full max-w-4xl">
+<div class="container mx-auto max-w-4xl">
 	{#key content}
-		<Editor {content} />
+		<Editor {content} editorId="editor-1" />
 	{/key}
 </div>

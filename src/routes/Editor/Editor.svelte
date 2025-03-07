@@ -5,7 +5,7 @@
 	import { extensions } from './extensions';
 	import { appState } from '$lib/appState.svelte';
 
-	let { content } = $props();
+	let { content, editorId } = $props();
 
 	let editor = $state<EditorView>();
 	const themeCompartment = new Compartment();
@@ -13,7 +13,7 @@
 	const darkTheme = EditorView.theme({}, { dark: true });
 
 	onMount(() => {
-		const parent = document.getElementById('editor')!;
+		const parent = document.getElementById(editorId)!;
 		editor = new EditorView({
 			parent,
 			state: EditorState.create({
@@ -43,7 +43,7 @@
 	});
 </script>
 
-<div id="editor" class="h-full"></div>
+<div id={editorId}></div>
 
 <!-- Theme styles that I can't seem to do in theme.ts  -->
 <style>
