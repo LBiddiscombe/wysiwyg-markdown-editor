@@ -12,7 +12,7 @@ export class WysiwygPlugin implements PluginValue {
   }
 
   update(update: ViewUpdate) {
-    if (update.selectionSet || update.focusChanged || update.docChanged) {
+    if (update.selectionSet || update.focusChanged || update.docChanged || update.viewportChanged) {
       this.decorations = this.computeDecorations(update.view);
     }
   }
