@@ -22,6 +22,7 @@ export class WysiwygPlugin implements PluginValue {
     const tokenHidden = ['HardBreak', 'LinkMark', 'EmphasisMark', 'StrikethroughMark', 'CodeMark', 'CodeInfo', 'MarkMark'];
 
     const decorationHidden = Decoration.mark({ class: 'sr-only' });
+    const decorationStrike = Decoration.mark({ class: 'line-through' });
     const decorationBullet = Decoration.mark({ class: 'cm-bullet' });
     const decorationMark = Decoration.mark({ class: 'bg-info font-sans px-1 py-[2px]' });
 
@@ -36,6 +37,10 @@ export class WysiwygPlugin implements PluginValue {
 
           if (node.type.is('Mark')) {
             widgets.push(decorationMark.range(node.from, node.to));
+          }
+
+          if (node.type.is('Strikethrough')) {
+            widgets.push(decorationStrike.range(node.from, node.to));
           }
 
           if (
