@@ -25,6 +25,41 @@
 						untrack(() => {
 							content = update.state.doc.toString();
 						});
+					}),
+					EditorView.domEventHandlers({
+						drop(event, view) {
+							if (!event.dataTransfer) return false;
+							if (view.state.readOnly) return true;
+
+							const text = [];
+
+							let files = event.dataTransfer.files;
+							if (!files || files.length > 1 || files[0].type !== 'text/markdown') {
+								alert('One markdown file can be dropped here to replace the current content.');
+								return true;
+							}
+
+							if (files) {
+								let reader = new FileReader();
+								reader.onload = () => {
+									if (!/[\x00-\x08\x0e-\x1f]{2}/.test(reader.result as string)) {
+										view.dispatch({
+											changes: [
+												{
+													from: 0,
+													to: view.state.doc.length,
+													insert: reader.result as string
+												}
+											]
+										});
+									}
+								};
+								reader.readAsText(files[0]);
+								return true;
+							}
+
+							return false;
+						}
 					})
 				]
 			})
