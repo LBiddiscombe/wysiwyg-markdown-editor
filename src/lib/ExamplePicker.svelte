@@ -20,11 +20,14 @@
 	});
 </script>
 
-<div class="form-control">
-	<select class="select select-bordered select-sm" bind:value={content}>
-		<option disabled>Choose an example</option>
-		{#each examples as example, i}
-			<option value={example.content} selected={i === 0}>{example.name}</option>
-		{/each}
-	</select>
+<div>
+	<label class="select">
+		<span class="label">Example</span>
+		<select class="select select-bordered select-sm" bind:value={content}>
+			<option disabled>Choose an example</option>
+			{#each examples as example, i}
+				<option value={example.content} selected={i === 0}>{example.name}</option>
+			{/each}
+		</select>
+	</label>
 </div>
