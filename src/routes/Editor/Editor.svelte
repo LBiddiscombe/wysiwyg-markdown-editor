@@ -12,6 +12,32 @@
 	const lightTheme = EditorView.theme({}, { dark: false });
 	const darkTheme = EditorView.theme({}, { dark: true });
 
+	export function getContent() {
+		if (!editor) return '';
+		return editor.state.doc.toString();
+	}
+
+	export function handleFile(file: File) {
+		if (!editor) return;
+		if (editor.state.readOnly) return true;
+		let reader = new FileReader();
+		reader.readAsText(file);
+
+		reader.onload = () => {
+			if (!/[\x00-\x08\x0e-\x1f]{2}/.test(reader.result as string)) {
+				editor!.dispatch({
+					changes: [
+						{
+							from: 0,
+							to: editor!.state.doc.length,
+							insert: reader.result as string
+						}
+					]
+				});
+			}
+		};
+	}
+
 	onMount(() => {
 		const parent = document.getElementById(editorId)!;
 		editor = new EditorView({
@@ -22,16 +48,11 @@
 					...extensions,
 					themeCompartment.of(appState.dark ? darkTheme : lightTheme),
 					EditorView.updateListener.of((update) => {
-						untrack(() => {
-							content = update.state.doc.toString();
-						});
+						content = update.state.doc.toString();
 					}),
 					EditorView.domEventHandlers({
 						drop(event, view) {
 							if (!event.dataTransfer) return false;
-							if (view.state.readOnly) return true;
-
-							const text = [];
 
 							let files = event.dataTransfer.files;
 							if (!files || files.length > 1 || files[0].type !== 'text/markdown') {
@@ -40,21 +61,7 @@
 							}
 
 							if (files) {
-								let reader = new FileReader();
-								reader.onload = () => {
-									if (!/[\x00-\x08\x0e-\x1f]{2}/.test(reader.result as string)) {
-										view.dispatch({
-											changes: [
-												{
-													from: 0,
-													to: view.state.doc.length,
-													insert: reader.result as string
-												}
-											]
-										});
-									}
-								};
-								reader.readAsText(files[0]);
+								handleFile(files[0]);
 								return true;
 							}
 

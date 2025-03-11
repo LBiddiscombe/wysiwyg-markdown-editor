@@ -2,78 +2,96 @@
 	import Editor from './Editor/Editor.svelte';
 	import { ThemeToggle } from '$lib';
 	import ExamplePicker from '$lib/ExamplePicker.svelte';
+	import type { SvelteComponent } from 'svelte';
 
 	let content = $state('');
+	let editorComponent = $state<SvelteComponent>();
+
+	function onFileChange(event: Event) {
+		const target = event.target as HTMLInputElement;
+		const files = target.files;
+
+		if (files && files.length > 0) {
+			const file = files[0];
+			editorComponent!.handleFile(file);
+		}
+	}
+
+	function handleDownload() {
+		const editorContent = editorComponent!.getContent();
+		const blob = new Blob([editorContent], { type: 'text/markdown' });
+		let url = URL.createObjectURL(blob);
+		let element = document.createElement('a');
+		element.setAttribute('download', 'Downloaded Successfully');
+		element.href = url;
+		element.download = 'markdown.md';
+		element.click();
+	}
+
+	function handleCopyToClipboard(event: Event) {
+		const target = event.target as HTMLButtonElement;
+		const editorContent = editorComponent!.getContent();
+
+		navigator.clipboard.writeText(editorContent);
+
+		target.textContent = 'Copied!';
+		setTimeout(() => {
+			target.textContent = 'Copy to Clipboard';
+		}, 1000);
+	}
 </script>
 
-<!-- <div class="navbar bg-base-100 sticky top-0 z-10 shadow-sm">
-	<div class="flex-1">
-		<a class="btn btn-ghost text-xl" href="/">Rich Markdown Editor</a>
-	</div>
-	<div class="flex-1">
-		<ExamplePicker bind:content />
-	</div>
-	<div class="flex-none">
-		<ThemeToggle />
-	</div>
-</div>
-
-<div class="container mx-auto max-w-4xl">
-	{#key content}
-		<Editor {content} editorId="editor-1" />
-	{/key}
-</div> -->
-
-<div class="drawer">
-	<input id="my-drawer-3" type="checkbox" class="drawer-toggle" />
-	<div class="drawer-content flex flex-col">
-		<!-- Navbar -->
-		<div class="navbar bg-base-300 w-full">
-			<div class="flex-none lg:hidden">
-				<label for="my-drawer-3" aria-label="open sidebar" class="btn btn-square btn-ghost">
-					<svg
-						xmlns="http://www.w3.org/2000/svg"
-						fill="none"
-						viewBox="0 0 24 24"
-						class="inline-block h-6 w-6 stroke-current"
-					>
-						<path
-							stroke-linecap="round"
-							stroke-linejoin="round"
-							stroke-width="2"
-							d="M4 6h16M4 12h16M4 18h16"
-						></path>
-					</svg>
-				</label>
-			</div>
-			<div class="mx-2 flex-1 px-2">WYSIWYG Markdown Editor</div>
-			<div class="hidden flex-none lg:block">
-				<ul class="menu menu-horizontal items-center gap-2">
-					<!-- Navbar menu content here -->
-					<button class="btn btn-primary">Upload Markdown</button>
-					<button class="btn btn-success">Download</button>
-					<ExamplePicker bind:content />
-					<ThemeToggle />
-				</ul>
-			</div>
-		</div>
+<div class="drawer lg:drawer-open">
+	<input id="my-drawer-2" type="checkbox" class="drawer-toggle" />
+	<div class="drawer-content flex flex-col items-center justify-start">
 		<!-- Page content here -->
+		<label
+			for="my-drawer-2"
+			class="btn btn-ghost-outline drawer-button sticky top-2 z-1 m-2 self-start lg:hidden"
+		>
+			<svg
+				xmlns="http://www.w3.org/2000/svg"
+				fill="none"
+				viewBox="0 0 24 24"
+				class="inline-block h-6 w-6 stroke-current"
+			>
+				<path
+					stroke-linecap="round"
+					stroke-linejoin="round"
+					stroke-width="2"
+					d="M4 6h16M4 12h16M4 18h16"
+				></path>
+			</svg>
+		</label>
 		<div class="container mx-auto max-w-4xl">
 			{#key content}
-				<Editor {content} editorId="editor-1" />
+				<Editor bind:this={editorComponent} {content} editorId="editor-1" />
 			{/key}
 		</div>
 	</div>
 	<div class="drawer-side">
-		<label for="my-drawer-3" aria-label="close sidebar" class="drawer-overlay"></label>
-		<ul class="menu bg-base-200 min-h-full w-80 gap-2 p-4">
+		<label for="my-drawer-2" aria-label="close sidebar" class="drawer-overlay"></label>
+		<ul class="menu bg-base-200 text-base-content min-h-full w-80 p-4">
 			<!-- Sidebar content here -->
 			<div class="flex flex-1 flex-col gap-2">
-				<button class="btn btn-primary">Upload Markdown</button>
-				<button class="btn btn-success">Download</button>
+				<h1 class="mt-12 text-center text-xl font-bold lg:mt-0">WYSIWYG Markdown Editor</h1>
+				<div class="divider">Load Example</div>
 				<ExamplePicker bind:content />
+				<div class="divider mt-8">Upload Markdown</div>
+				<input
+					type="file"
+					class="file-input file-input-ghost"
+					accept=".md"
+					onchange={onFileChange}
+				/>
+				<p class="text-center text-xs italic">
+					Or you can also drop a markdown file straight on to the editor
+				</p>
 			</div>
-			<div class="flex flex-none justify-end">
+			<div class="flex flex-none flex-col gap-2">
+				<div class="divider">Save Markdown</div>
+				<button class="btn btn-primary" onclick={handleCopyToClipboard}>Copy to Clipboard</button>
+				<button class="btn btn-success mb-8" onclick={handleDownload}>Download Markdown</button>
 				<ThemeToggle />
 			</div>
 		</ul>

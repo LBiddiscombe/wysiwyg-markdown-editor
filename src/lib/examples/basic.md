@@ -1,3 +1,7 @@
+# WYSIWYG Markdown Editor
+
+A WYSIWYG Markdown editor using [CodeMirror](https://codemirror.net/)
+
 ## Markdown Cheat Sheet
 
 Thanks for visiting [The Markdown Guide](https://www.markdownguide.org)!
