@@ -26,7 +26,7 @@ const editorConfig: Extension = (() => [
   drawSelection(),
   bracketMatching(),
   closeBrackets(),
-  autocompletion(),
+  autocompletion({ /* closeOnBlur: false, */ aboveCursor: true, }),
   rectangularSelection(),
   crosshairCursor(),
   highlightSelectionMatches(),

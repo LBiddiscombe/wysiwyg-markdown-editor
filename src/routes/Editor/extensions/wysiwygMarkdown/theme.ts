@@ -37,6 +37,25 @@ export const theme = EditorView.theme({
   '.cm-renderBlock p img[alt$="#25"]': { width: '25%' },
   '.cm-renderBlock p img[alt$="#10"]': { width: '10%' },
 
+  '.cm-completionLabel': {
+    lineHeight: '2rem',
+  },
+
+  '.cm-completionDetail': {
+    color: 'gray',
+  },
+
+  '.cm-completionIcon': {
+    marginRight: '0.25rem',
+  },
+
+
+  '.cm-tooltip-autocomplete > ul': {
+    //height: '100%',
+    maxHeight: '21.5rem !important'
+
+  },
+
   '.cm-line.cm-codeblock': {
     backgroundColor: 'rgba(0, 0, 10, 0.7)',
     color: 'lightgreen',
