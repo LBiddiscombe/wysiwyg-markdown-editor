@@ -5,6 +5,7 @@
 	import type { SvelteComponent } from 'svelte';
 
 	let content = $state('');
+	let isOpen = $state<boolean>(true);
 	let editorComponent = $state<SvelteComponent>();
 
 	function onFileChange(event: Event) {
@@ -17,6 +18,11 @@
 		}
 	}
 
+	$effect(() => {
+		content;
+		isOpen = false;
+	});
+
 	function handleDownload() {
 		const editorContent = editorComponent!.getContent();
 		const blob = new Blob([editorContent], { type: 'text/markdown' });
@@ -26,15 +32,23 @@
 		element.href = url;
 		element.download = 'markdown.md';
 		element.click();
+		element.remove();
 	}
 
-	function handleCopyToClipboard(event: Event) {
+	async function handleCopyToClipboard(event: Event) {
 		const target = event.target as HTMLButtonElement;
 		const editorContent = editorComponent!.getContent();
 
-		navigator.clipboard.writeText(editorContent);
+		try {
+			await navigator.clipboard.writeText(editorContent);
+			target.textContent = 'Copied!';
+		} catch (error) {
+			if (error instanceof Error) {
+				target.textContent = 'Failed to copy!';
+				alert(error.message);
+			}
+		}
 
-		target.textContent = 'Copied!';
 		setTimeout(() => {
 			target.textContent = 'Copy to Clipboard';
 		}, 1000);
@@ -42,11 +56,11 @@
 </script>
 
 <div class="drawer lg:drawer-open">
-	<input id="my-drawer-2" type="checkbox" class="drawer-toggle" />
+	<input bind:checked={isOpen} id="left-drawer" type="checkbox" class="drawer-toggle" />
 	<div class="drawer-content flex flex-col items-center justify-start">
 		<!-- Page content here -->
 		<label
-			for="my-drawer-2"
+			for="left-drawer"
 			class="btn btn-ghost-outline drawer-button sticky top-2 z-1 m-2 self-start lg:hidden"
 		>
 			<svg
@@ -70,7 +84,7 @@
 		</div>
 	</div>
 	<div class="drawer-side">
-		<label for="my-drawer-2" aria-label="close sidebar" class="drawer-overlay"></label>
+		<label for="left-drawer" aria-label="close sidebar" class="drawer-overlay"></label>
 		<ul class="menu bg-base-200 text-base-content min-h-full w-80 p-4">
 			<!-- Sidebar content here -->
 			<div class="flex flex-1 flex-col gap-2">
