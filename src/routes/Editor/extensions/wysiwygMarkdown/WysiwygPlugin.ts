@@ -24,7 +24,8 @@ export class WysiwygPlugin implements PluginValue {
     const decorationHidden = Decoration.mark({ class: 'sr-only' });
     const decorationStrike = Decoration.mark({ class: 'line-through' });
     const decorationBullet = Decoration.mark({ class: 'cm-bullet' });
-    const decorationMark = Decoration.mark({ class: 'bg-info font-sans px-1 py-[2px]' });
+    const decorationOrdered = Decoration.mark({ class: 'cm-ordered' });
+    const decorationMark = Decoration.mark({ class: 'bg-yellow-300/50 font-sans px-1 py-[2px]' });
 
     const widgets: Range<Decoration>[] = [];
     const [cursor] = view.state.selection.ranges;
@@ -34,7 +35,6 @@ export class WysiwygPlugin implements PluginValue {
         from,
         to,
         enter(node) {
-
           if (node.type.is('Mark')) {
             widgets.push(decorationMark.range(node.from, node.to));
           }
@@ -54,6 +54,11 @@ export class WysiwygPlugin implements PluginValue {
           if (node.name === 'ListMark' && node.matchContext(['BulletList', 'ListItem']) &&
             cursor.from !== node.from && cursor.from !== node.from + 1) {
             widgets.push(decorationBullet.range(node.from, node.to));
+          }
+
+          if (node.name === 'ListMark' && node.matchContext(['OrderedList', 'ListItem']) &&
+            cursor.from !== node.from && cursor.from !== node.from + 1) {
+            widgets.push(decorationOrdered.range(node.from, node.to));
           }
 
           if (node.name === 'Task' &&

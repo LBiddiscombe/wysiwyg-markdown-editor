@@ -100,7 +100,11 @@
 	:global(.cm-line .cm-bullet::after) {
 		display: inline !important;
 		color: darkgray;
-		margin: 0 0.25rem 0 0.25rem;
+		margin: 0 0.5rem 0 0.75rem;
 		content: '•';
+	}
+
+	:global(.cm-line .cm-ordered) {
+		margin-left: 0.75rem;
 	}
 </style>

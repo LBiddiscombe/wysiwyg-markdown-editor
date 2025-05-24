@@ -15,7 +15,7 @@ export class CopyCodeWidget extends WidgetType {
   toDOM(view: EditorView): HTMLElement {
     let copyBtn = document.createElement('button')
     copyBtn.textContent = 'Copy'
-    copyBtn.className = 'btn btn-soft btn-xs btn-primary absolute right-3 hidden group-hover:inline'
+    copyBtn.className = 'btn btn-soft btn-xs btn-primary absolute right-3'
     copyBtn.onclick = () => {
       navigator.clipboard.writeText(this.code)
       copyBtn.textContent = 'Copied!'

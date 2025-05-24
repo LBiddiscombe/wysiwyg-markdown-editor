@@ -4,8 +4,8 @@ import { RangeSetBuilder } from '@codemirror/state'
 import type { EditorView } from '@codemirror/view'
 import { Decoration, ViewPlugin } from '@codemirror/view'
 
-const codeBlockDecoration = Decoration.line({ attributes: { class: 'cm-codeblock' } })
-const codeBlockOpenDecoration = Decoration.line({ attributes: { class: 'cm-codeblock-open group' } })
+const codeBlockDecoration = Decoration.line({ attributes: { class: 'cm-codeblock group' } })
+const codeBlockOpenDecoration = Decoration.line({ attributes: { class: 'cm-codeblock-open' } })
 const codeBlockCloseDecoration = Decoration.line({ attributes: { class: 'cm-codeblock-close' } })
 const codeDecoration = Decoration.mark({ attributes: { class: 'cm-code' } })
 const codeOpenDecoration = Decoration.mark({ attributes: { class: 'cm-code cm-code-open' } })
@@ -30,7 +30,7 @@ const decorate = (view: EditorView) => {
         from: line.from,
         to: line.to,
         enter({ type, from, to }) {
-          if (type.name === 'FencedCode') {
+          if (type.name === 'FencedCode' || type.name === 'CodeBlock') {
             builder.add(line.from, line.from, codeBlockDecoration)
 
             const openLine = view.state.doc.lineAt(from)

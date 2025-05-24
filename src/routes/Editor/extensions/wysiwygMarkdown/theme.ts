@@ -37,6 +37,10 @@ export const theme = EditorView.theme({
   '.cm-renderBlock p img[alt$="#25"]': { width: '25%' },
   '.cm-renderBlock p img[alt$="#10"]': { width: '10%' },
 
+  '.cm-tooltip-autocomplete > ul': {
+    maxHeight: '21.5rem !important'
+  },
+
   '.cm-completionLabel': {
     lineHeight: '2rem',
   },
@@ -47,13 +51,6 @@ export const theme = EditorView.theme({
 
   '.cm-completionIcon': {
     marginRight: '0.25rem',
-  },
-
-
-  '.cm-tooltip-autocomplete > ul': {
-    //height: '100%',
-    maxHeight: '21.5rem !important'
-
   },
 
   '.cm-line.cm-codeblock': {
@@ -72,11 +69,16 @@ export const theme = EditorView.theme({
     '&.cm-codeblock-close': {
       borderRadius: '0 0 0.5rem 0.5rem',
       paddingBottom: '0.5rem'
-    }
+    },
+    '&.cm-codeblock-open.cm-codeblock-close': {
+      borderRadius: '0.5rem',
+      padding: '0.5rem 0'
+    },
   },
 
   '.cm-content .cm-line .cm-code': {
     backgroundColor: 'rgba(0, 0, 10, 0.7)',
+    color: 'white',
     padding: '0.25rem 0',
     '&.cm-code-open': {
       borderRadius: '0.25rem 0 0 0.25rem',
@@ -93,28 +95,12 @@ export const theme = EditorView.theme({
     fontFamily: 'ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji","Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"',
     textAlign: 'left',
     borderCollapse: 'collapse',
-    borderRadius: '0.25rem',
-    boxShadow: '0 1px 2px rgba(0, 0, 0, 0.12), 0 3px 10px rgba(0, 0, 0, 0.08)',
-
-    '& thead': {
-      borderBlockEnd: '1px solid whitesmoke'
-    },
-
-    '& tfoot': {
-      borderBlock: '2px solid',
-    },
-
-    '& tr:hover': {
-      background: 'whitesmoke'
-    },
-
-    '& th': {
-      minWidth: '8rem'
-    },
+    borderStyle: 'hidden',
 
     '& th, & td': {
       padding: '0.5rem 0.75rem',
-      borderRight: '1px solid whitesmoke'
+      border: '1px solid lightgray',
+      minWidth: '8rem'
     }
   }
 })
@@ -127,7 +113,7 @@ export const wysiwygStyle = HighlightStyle.define([
   { tag: t.link, class: 'font-sans underline text-blue-600' },
   { tag: t.emphasis, class: 'font-sans italic' },
   { tag: t.strong, class: 'font-sans font-bold' },
-  { tag: t.monospace, class: 'font-mono text-sm text-white' },
+  { tag: t.monospace, class: 'font-mono text-sm' },
   { tag: t.content, class: 'font-sans' },
   { tag: t.meta, class: 'text-gray-400' },
   { tag: t.url, class: 'font-sans' },

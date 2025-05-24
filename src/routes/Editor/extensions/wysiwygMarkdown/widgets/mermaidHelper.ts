@@ -34,7 +34,7 @@ class MermaidHelper {
             containerElement.innerHTML = svg;
             const svgElement = document.getElementById(mermaidId);
             if (svgElement) {
-              svgElement.setAttribute('height', '100%');
+              svgElement.classList.add('mx-auto', 'h-full');
               bindFunctions?.(svgElement);
             }
           })

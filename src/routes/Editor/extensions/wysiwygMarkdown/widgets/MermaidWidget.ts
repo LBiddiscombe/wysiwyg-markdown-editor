@@ -17,7 +17,7 @@ export class MermaidWidget extends WidgetType {
   toDOM(view: EditorView): HTMLElement {
     const containerElement = mermaidHelper.text2SVG(this.source);
 
-    containerElement.className = 'cm-mermaid';
+    containerElement.className = 'cm-mermaid w-full';
 
     containerElement.onclick = ({ x, y }) => {
       view.dispatch({

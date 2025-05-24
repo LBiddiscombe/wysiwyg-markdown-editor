@@ -16,7 +16,7 @@ export class TaskMarkerWidget extends WidgetType {
     const containerElement = document.createElement('span');
     const checked = this.source.charAt(1) === 'x';
 
-    containerElement.innerHTML = `<input type='checkbox' class='w-4 h-4 rounded align-baseline cursor-pointer' ${checked ? 'checked' : ''}>`;
+    containerElement.innerHTML = `<input type='checkbox' class='w-4 h-4 ml-2 mr-1 rounded align-baseline cursor-pointer' ${checked ? 'checked' : ''}>`;
 
     containerElement.onclick = ({ x, y, target }) => {
       if (target) {
