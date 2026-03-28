@@ -11,9 +11,7 @@ A WYSIWYG Markdown editor using [CodeMirror](https://codemirror.net/)
 ```ts
 const state = EditorState.create({
 	doc: 'my source code',
-	extensions: [
-		coolGlow
-	]
+	extensions: [coolGlow]
 });
 ```
 

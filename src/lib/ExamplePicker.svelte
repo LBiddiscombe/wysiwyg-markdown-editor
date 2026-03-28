@@ -25,7 +25,7 @@
 		<span class="label">Example</span>
 		<select class="select select-bordered select-sm" bind:value={content}>
 			<option disabled>Choose an example</option>
-			{#each examples as example, i}
+			{#each examples as example, i (example.name)}
 				<option value={example.content} selected={i === 0}>{example.name}</option>
 			{/each}
 		</select>

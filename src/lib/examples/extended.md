@@ -20,19 +20,17 @@ These elements extend the basic syntax by adding additional features. Not all Ma
 
 ### Table
 
-| Syntax | Description |
-| ----------- | ----------- |
-| Header | Title |
-| Paragraph | Text |
+| Syntax    | Description |
+| --------- | ----------- |
+| Header    | Title       |
+| Paragraph | Text        |
 
 ### Fenced Code Block
 
 ```ts
 const state = EditorState.create({
 	doc: 'my source code',
-	extensions: [
-		coolGlow
-	]
+	extensions: [coolGlow]
 });
 ```
 

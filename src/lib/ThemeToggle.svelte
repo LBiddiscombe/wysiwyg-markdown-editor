@@ -1,9 +1,5 @@
 <script lang="ts">
 	import { appState } from '$lib/appState.svelte';
-
-	$effect(() => {
-		appState.dark;
-	});
 </script>
 
 <label class="toggle text-base-content">

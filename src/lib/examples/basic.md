@@ -15,7 +15,9 @@ These are the elements outlined in John Gruber’s original design document. All
 ### Heading
 
 # H1
+
 ## H2
+
 ### H3
 
 ### Bold
@@ -24,7 +26,7 @@ These are the elements outlined in John Gruber’s original design document. All
 
 ### Italic
 
-*italicized text*
+_italicized text_
 
 ### Blockquote
 

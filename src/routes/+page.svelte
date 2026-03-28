@@ -19,8 +19,9 @@
 	}
 
 	$effect(() => {
-		content;
-		isOpen = false;
+		if (content !== undefined) {
+			isOpen = false;
+		}
 	});
 
 	function handleDownload() {

@@ -12,6 +12,18 @@
 	const lightTheme = EditorView.theme({}, { dark: false });
 	const darkTheme = EditorView.theme({}, { dark: true });
 
+	function hasInvalidControlChars(text: string): boolean {
+		let found = 0;
+		for (const char of text) {
+			const code = char.charCodeAt(0);
+			if ((code >= 0 && code <= 8) || (code >= 14 && code <= 31)) {
+				found += 1;
+				if (found >= 2) return true;
+			}
+		}
+		return false;
+	}
+
 	export function getContent() {
 		if (!editor) return '';
 		return editor.state.doc.toString();
@@ -24,7 +36,7 @@
 		reader.readAsText(file);
 
 		reader.onload = () => {
-			if (!/[\x00-\x08\x0e-\x1f]{2}/.test(reader.result as string)) {
+			if (!hasInvalidControlChars(reader.result as string)) {
 				editor!.dispatch({
 					changes: [
 						{
@@ -51,7 +63,7 @@
 						content = update.state.doc.toString();
 					}),
 					EditorView.domEventHandlers({
-						drop(event, view) {
+						drop(event) {
 							if (!event.dataTransfer) return false;
 
 							let files = event.dataTransfer.files;
@@ -75,11 +87,11 @@
 	});
 
 	$effect(() => {
-		appState.dark;
+		const isDark = appState.dark;
 		if (!editor) return;
 		untrack(() => {
 			editor!.dispatch({
-				effects: themeCompartment.reconfigure(appState.dark ? darkTheme : lightTheme)
+				effects: themeCompartment.reconfigure(isDark ? darkTheme : lightTheme)
 			});
 		});
 	});
