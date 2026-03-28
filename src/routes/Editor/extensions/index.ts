@@ -47,4 +47,4 @@ const editorConfig: Extension = (() => [
 	])
 ])();
 
-export const extensions = [wysiwygMarkdown(), editorConfig];
+export const extensions = [...wysiwygMarkdown(), editorConfig];

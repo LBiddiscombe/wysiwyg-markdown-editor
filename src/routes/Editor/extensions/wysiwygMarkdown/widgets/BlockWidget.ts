@@ -1,9 +1,5 @@
 import { EditorView, WidgetType } from '@codemirror/view';
-import rehypeStringify from 'rehype-stringify';
-import remarkGfm from 'remark-gfm';
-import remarkParse from 'remark-parse';
-import remarkRehype from 'remark-rehype';
-import { unified } from 'unified';
+import { marked } from 'marked';
 
 export class BlockWidget extends WidgetType {
 	constructor(private source: string) {
@@ -18,14 +14,9 @@ export class BlockWidget extends WidgetType {
 	}
 
 	toDOM(view: EditorView): HTMLElement {
-		const processor = unified()
-			.use(remarkParse)
-			.use(remarkGfm)
-			.use(remarkRehype)
-			.use(rehypeStringify);
 		const containerElement = document.createElement('div');
 		containerElement.className = 'cm-renderBlock';
-		containerElement.innerHTML = processor.processSync(this.source).toString();
+		containerElement.innerHTML = marked.parse(this.source) as string;
 
 		containerElement.onclick = ({ x, y }) => {
 			view.dispatch({
